@@ -1,4 +1,5 @@
 ﻿using System;
+using Algoritms_and_DataStructure.Lesson1;
 
 namespace Algoritms_and_DataStructure
 {
