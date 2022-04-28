@@ -2,7 +2,7 @@ using BenchmarkDotNet.Attributes;
 
 namespace Algoritms_and_DataStructure.Lesson4.BinaryTree;
 
-public class Binary_Tree : ITree
+public class Binary_Tree : ITree, IBFS, IDFS
 {
     private TreeNode _root;  // left less, right more
     public TreeNode GetRoot { get => _root; }
@@ -219,5 +219,53 @@ public class Binary_Tree : ITree
     public void PrintTree()
     {
         BTreePrinter.Print(_root);
+    }
+    public int BreadthFirstSearch(TreeNode root, int value)
+    {
+        var queueNods = new Queue<TreeNode>();
+        if(root != null)
+            queueNods.Enqueue(root);
+        while (true)
+        {
+            if (queueNods.Count == 0) //пункт 2
+                return -1;
+
+            var node = queueNods.Dequeue(); //пункт 3
+
+            if (node.Value == value) //пункт 4
+                return node.Value;
+            else
+            {
+                //пункт 5
+                if (node.LeftChild != null)
+                    queueNods.Enqueue(node.LeftChild);
+                if (node.RightChild != null)
+                    queueNods.Enqueue(node.RightChild);
+            }
+        }
+
+    }
+    public int DeepFirstSearch(TreeNode root, int value)
+    {
+        var stackNods = new Stack<TreeNode>();
+        if (root != null)
+            stackNods.Push(root);
+        while (true)
+        {
+            if (stackNods.Count == 0)
+                return -1;
+
+            var node = stackNods.Pop();
+            if (node.Value == value)
+                return node.Value;
+            else
+            {
+                if(node.LeftChild != null)
+                    stackNods.Push(node.LeftChild);
+                if (node.RightChild != null)
+                    stackNods.Push(node.RightChild);
+            }
+        }
+        
     }
 }
